@@ -11,7 +11,7 @@ class EmailService {
         this.link = 'http://localhost:4000'
         break
       case 'production': 
-        this.link = 'http://heroku'
+        this.link = 'https://api-mail-test.herokuapp.com'
         break
       default:
         this.link = 'http://localhost:4000'
@@ -50,7 +50,7 @@ class EmailService {
     const emailBody = this.createEmailTemplate(userName, verifyToken);
     const message = {
       to: email,
-      subject: 'Verify email',
+      subject: 'Email verification',
       html: emailBody
     }
     try {
