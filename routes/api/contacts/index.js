@@ -2,19 +2,20 @@ import { Router } from 'express';
 import { getContacts, getContactById, addContact, removeContact, updateContact } from '../../../controllers/contacts';
 import { validateCreation, validateUpdate, validateId, validateUpdateFavorite, validateQuery } from './validation';
 import guard from '../../../middlewares/guard';
+import wrapperError from '../../../middlewares/error-handler';
 
 const router = new Router();
 
-router.get('/', [guard, validateQuery], getContacts)
+router.get('/', [guard, validateQuery], wrapperError(getContacts))
 
-router.get('/:id', [guard, validateId], getContactById);
+router.get('/:id', [guard, validateId], wrapperError(getContactById));
 
-router.post('/', [guard, validateCreation], addContact);
+router.post('/', [guard, validateCreation], wrapperError(addContact));
 
-router.delete('/:id', [guard, validateId], removeContact);
+router.delete('/:id', [guard, validateId], wrapperError(removeContact));
 
-router.put('/:id', [guard, validateId, validateUpdate], updateContact);
+router.put('/:id', [guard, validateId, validateUpdate], wrapperError(updateContact));
 
-router.patch('/:id/favorite', [guard, validateId, validateUpdateFavorite], updateContact);
+router.patch('/:id/favorite', [guard, validateId, validateUpdateFavorite], wrapperError(updateContact));
 
 export default router
